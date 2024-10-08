@@ -112,13 +112,16 @@ function TodolistGrid() {
     };
 
     const handleDelete = () => {
-        if (gridRef.current.getSelectedNodes().length > 0) {
-            setTodos(todos.filter((todo, index) => 
-                index != gridRef.current.getSelectedNodes()[0].id))
+        const selectedNodes = gridRef.current.api.getSelectedNodes();
+        
+        if (selectedNodes.length > 0) {
+            const selectedData = selectedNodes[0].data;  // Get the data (the todo object) of the selected row
+            setTodos(todos.filter(todo => todo !== selectedData));  // Filter out the selected row's data from the todos array
         } else {
             alert('Select a row first!');
         }
     };
+
 
     return (
         <div className="todolist-container">
